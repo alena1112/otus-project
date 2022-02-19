@@ -1,0 +1,82 @@
+Classfile /Users/alena.kovalenko/work/projects/otus-project/hw05-aop/build/classes/java/main/com/otusproject/TestLogging2.class
+  Last modified 9 февр. 2022 г.; size 560 bytes
+  SHA-256 checksum 3e7fa54df960102e32cdae13f5e7a5e3e011bf1c740a4a73d3799c45bcec8a05
+  Compiled from "TestLogging2.java"
+public class com.otusproject.TestLogging2
+  minor version: 0
+  major version: 61
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #7                          // com/otusproject/TestLogging2
+  super_class: #2                         // java/lang/Object
+  interfaces: 0, fields: 0, methods: 3, attributes: 1
+Constant pool:
+   #1 = Methodref          #2.#3          // java/lang/Object."<init>":()V
+   #2 = Class              #4             // java/lang/Object
+   #3 = NameAndType        #5:#6          // "<init>":()V
+   #4 = Utf8               java/lang/Object
+   #5 = Utf8               <init>
+   #6 = Utf8               ()V
+   #7 = Class              #8             // com/otusproject/TestLogging2
+   #8 = Utf8               com/otusproject/TestLogging2
+   #9 = Utf8               Code
+  #10 = Utf8               LineNumberTable
+  #11 = Utf8               LocalVariableTable
+  #12 = Utf8               this
+  #13 = Utf8               Lcom/otusproject/TestLogging2;
+  #14 = Utf8               calculation
+  #15 = Utf8               (I)V
+  #16 = Utf8               param
+  #17 = Utf8               I
+  #18 = Utf8               RuntimeVisibleAnnotations
+  #19 = Utf8               Lcom/otusproject/Log;
+  #20 = Utf8               (II)V
+  #21 = Utf8               param1
+  #22 = Utf8               param2
+  #23 = Utf8               SourceFile
+  #24 = Utf8               TestLogging2.java
+{
+  public com.otusproject.TestLogging2();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 3: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/otusproject/TestLogging2;
+
+  public void calculation(int);
+    descriptor: (I)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=0, locals=2, args_size=2
+         0: return
+      LineNumberTable:
+        line 5: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       1     0  this   Lcom/otusproject/TestLogging2;
+            0       1     1 param   I
+    RuntimeVisibleAnnotations:
+      0: #19()
+        com.otusproject.Log
+
+  public void calculation(int, int);
+    descriptor: (II)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=0, locals=3, args_size=3
+         0: return
+      LineNumberTable:
+        line 7: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       1     0  this   Lcom/otusproject/TestLogging2;
+            0       1     1 param1   I
+            0       1     2 param2   I
+}
+SourceFile: "TestLogging2.java"

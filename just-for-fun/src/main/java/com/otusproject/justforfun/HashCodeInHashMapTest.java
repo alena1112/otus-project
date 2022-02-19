@@ -3,7 +3,7 @@ package com.otusproject.justforfun;
 import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.vm.VM;
 
-public class HashMapTest {
+public class HashCodeInHashMapTest {
     private static volatile Object sink;
 
     public static void main(String[] args) {
