@@ -5,4 +5,5 @@ include 'hw03-test'
 include 'just-for-fun'
 include 'hw04-gc'
 include 'hw05-aop'
+include 'hw07-patterns'
 
