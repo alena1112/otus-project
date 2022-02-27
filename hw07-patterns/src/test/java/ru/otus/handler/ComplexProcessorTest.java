@@ -1,17 +1,23 @@
 package ru.otus.handler;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.listener.Listener;
 import ru.otus.model.Message;
 import ru.otus.processor.Processor;
+import ru.otus.processor.homework.EvenSecondException;
+import ru.otus.processor.homework.SwapProcessor;
+import ru.otus.processor.homework.ThrowExceptionProcessor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class ComplexProcessorTest {
@@ -88,6 +94,56 @@ class ComplexProcessorTest {
 
         //then
         verify(listener, times(1)).onUpdated(message);
+    }
+
+    @Test
+    @DisplayName("Тестируем SwapProcessor")
+    void swapProcessorTest() {
+        String field11 = "field11";
+        String field12 = "field12";
+        var message = new Message.Builder(1L).field11(field11).field12(field12).build();
+
+        var processor1 = new SwapProcessor();
+
+        List<Processor> processors = List.of(processor1);
+
+        var complexProcessor = new ComplexProcessor(processors, (ex) -> {
+        });
+
+        //when
+        var result = complexProcessor.handle(message);
+
+        //then
+        Assertions.assertEquals(result.getField11(), field12);
+        Assertions.assertEquals(result.getField12(), field11);
+    }
+
+    @Test
+    @DisplayName("Тестируем ThrowExceptionProcessor")
+    void throwExceptionProcessorTest() {
+        var message = new Message.Builder(1L).build();
+
+        var processor1 = new ThrowExceptionProcessor(() -> LocalDateTime.now().withSecond(10));
+
+        List<Processor> processors = List.of(processor1);
+
+        var complexProcessor1 = new ComplexProcessor(processors, (ex) -> {
+            assertTrue(ex instanceof EvenSecondException);
+            assertEquals(ex.getMessage(), "Even second is 10");
+            throw new TestException(ex.getMessage());
+        });
+
+        assertThatExceptionOfType(TestException.class).isThrownBy(() -> complexProcessor1.handle(message));
+
+        processor1 = new ThrowExceptionProcessor(() -> LocalDateTime.now().withSecond(11));
+
+        processors = List.of(processor1);
+
+        var complexProcessor2 = new ComplexProcessor(processors, (ex) -> {
+            throw new TestException(ex.getMessage());
+        });
+
+        assertThatNoException().isThrownBy(() -> complexProcessor2.handle(message));
     }
 
     private static class TestException extends RuntimeException {
