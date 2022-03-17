@@ -1,14 +1,12 @@
 package com.otusproject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ATMCellsImpl implements ATMCells {
-    private List<Cell> cells = new ArrayList<>();
+    private Map<Banknote, Cell> cells = new HashMap<>();
 
     public ATMCellsImpl() {
-        Arrays.stream(Banknote.values()).forEach(banknote -> this.cells.add(new CellImpl(banknote)));
+        Arrays.stream(Banknote.values()).forEach(banknote -> this.cells.put(banknote, new CellImpl(banknote)));
     }
 
     @Override
@@ -22,7 +20,7 @@ public class ATMCellsImpl implements ATMCells {
     @Override
     public int getBalanceAmount() {
         int result = 0;
-        for (Cell cell : cells) {
+        for (Cell cell : cells.values()) {
             result += cell.getBalanceAmount();
         }
         return result;
@@ -55,16 +53,14 @@ public class ATMCellsImpl implements ATMCells {
     @Override
     public ATMCells clone() {
         ATMCellsImpl clone = new ATMCellsImpl();
-        clone.cells = new ArrayList<>();
-        for (Cell cell: this.cells) {
-            clone.cells.add(cell.clone());
+        clone.cells = new HashMap<>();
+        for (Map.Entry<Banknote, Cell> entry: this.cells.entrySet()) {
+            clone.cells.put(entry.getKey(), entry.getValue().clone());
         }
         return clone;
     }
 
     private Cell getCellByBanknote(Banknote banknote) {
-        return cells.stream()
-                .filter(cell -> banknote.equals(cell.getBanknote()))
-                .findAny().get();
+        return cells.get(banknote);
     }
 }
