@@ -35,14 +35,14 @@ public class ClientDataTemplateJdbc implements DataTemplate<Client> {
     }
 
     @Override
-    public List<Client> findAll(Connection connection) {
-        return dbExecutor.executeSelect(connection, "select * from client", Collections.emptyList(), rs -> {
-            var clientList = new ArrayList<Client>();
+    public List<Long> findAll(Connection connection) {
+        return dbExecutor.executeSelect(connection, "select id from client", Collections.emptyList(), rs -> {
+            var clientIdList = new ArrayList<Long>();
             try {
                 while (rs.next()) {
-                    clientList.add(new Client(rs.getLong("id"), rs.getString("name")));
+                    clientIdList.add(rs.getLong("id"));
                 }
-                return clientList;
+                return clientIdList;
             } catch (SQLException e) {
                 throw new DataTemplateException(e);
             }
