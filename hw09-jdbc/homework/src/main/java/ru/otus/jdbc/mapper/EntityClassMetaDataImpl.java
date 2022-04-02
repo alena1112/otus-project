@@ -1,7 +1,7 @@
 package ru.otus.jdbc.mapper;
 
-import ru.otus.core.repository.DataTemplateException;
-import ru.otus.crm.model.Id;
+import ru.otus.db.core.repository.DataTemplateException;
+import ru.otus.db.crm.model.Id;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

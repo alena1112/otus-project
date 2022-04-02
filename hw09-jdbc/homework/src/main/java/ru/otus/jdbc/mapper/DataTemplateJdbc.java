@@ -1,8 +1,8 @@
 package ru.otus.jdbc.mapper;
 
-import ru.otus.core.repository.DataTemplate;
-import ru.otus.core.repository.DataTemplateException;
-import ru.otus.core.repository.executor.DbExecutor;
+import ru.otus.db.core.repository.DataTemplate;
+import ru.otus.db.core.repository.DataTemplateException;
+import ru.otus.db.core.repository.executor.DbExecutor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Function;
 
-import static ru.otus.core.repository.executor.DbExecutorImpl.NULL_VALUE;
+import static ru.otus.db.core.repository.executor.DbExecutorImpl.NULL_VALUE;
 
 /**
  * Сохратяет объект в базу, читает объект из базы
