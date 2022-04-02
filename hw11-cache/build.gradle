@@ -7,6 +7,10 @@ targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
     implementation("ch.qos.logback:logback-classic")
+    implementation 'ch.qos.logback:logback-classic'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'com.zaxxer:HikariCP'
+    implementation 'org.postgresql:postgresql'
 }
 
 test {
