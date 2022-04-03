@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface DataTemplate<T> {
     Optional<T> findById(Connection connection, long id);
 
-    List<T> findAll(Connection connection);
+    List<Long> findAll(Connection connection);
 
     long insert(Connection connection, T object);
 
