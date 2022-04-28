@@ -7,8 +7,12 @@ import otus.core.repository.DataTemplateHibernate;
 import otus.core.repository.HibernateUtils;
 import otus.core.sessionmanager.TransactionManagerHibernate;
 import otus.crm.dbmigrations.MigrationsExecutorFlyway;
+import otus.crm.model.Address;
 import otus.crm.model.Client;
+import otus.crm.model.Phone;
 import otus.crm.service.DbServiceClientImpl;
+
+import java.util.List;
 
 public class DbServiceDemo {
 
@@ -25,7 +29,7 @@ public class DbServiceDemo {
 
         new MigrationsExecutorFlyway(dbUrl, dbUserName, dbPassword).executeMigrations();
 
-        var sessionFactory = HibernateUtils.buildSessionFactory(configuration, Client.class);
+        var sessionFactory = HibernateUtils.buildSessionFactory(configuration, Client.class, Address.class, Phone.class);
 
         var transactionManager = new TransactionManagerHibernate(sessionFactory);
 ///
@@ -46,5 +50,25 @@ public class DbServiceDemo {
 
         log.info("All clients");
         dbServiceClient.findAll().forEach(client -> log.info("client:{}", client));
+
+        log.info("create client with address and phone");
+        Address address = new Address("address");
+        Phone phone = new Phone("111 1111");
+        final var dbServiceThird = dbServiceClient.saveClient(new Client("dbServiceThird", address, List.of(phone)));
+        var dbServiceThirdSelected = dbServiceClient.getClient(dbServiceThird.getId())
+                .orElseThrow(() -> new RuntimeException("Client not found, id:" + dbServiceThird.getId()));
+        log.info("dbServiceThirdSelected:{}", dbServiceThirdSelected);
+
+        log.info("update client name");
+        dbServiceClient.saveClient(new Client(dbServiceThirdSelected.getId(), dbServiceThirdSelected.getName() + "_new",
+                dbServiceThirdSelected.getAddress(), dbServiceThirdSelected.getPhones()));
+        dbServiceThirdSelected = dbServiceClient.getClient(dbServiceThirdSelected.getId())
+                .orElseThrow(() -> new RuntimeException("Client not found, id:" + dbServiceThird.getId()));
+        log.info("clientUpdated:{}", dbServiceThirdSelected);
+
+        log.info("delete client");
+        dbServiceClient.removeClient(dbServiceThirdSelected);
+        dbServiceThirdSelected = dbServiceClient.getClient(dbServiceThirdSelected.getId()).orElse(null);
+        log.info("clientDeleted:{}", dbServiceThirdSelected);
     }
 }
