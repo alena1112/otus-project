@@ -4,4 +4,6 @@ public interface Versions {
     String jol = "0.16";
 
     String testcontainers = "1.15.3";
+
+    String reflections = "0.10.2";
 }
