@@ -1,49 +1,36 @@
 package ru.otus.crm.model;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Entity
-@Table(name = "phone")
-public class Phone implements Cloneable {
+@Table("phone")
+public class Phone {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "number")
     private String number;
 
-    public Phone() {
-    }
+    private Long clientId;
 
-    public Phone(Long id, String number) {
+    @PersistenceConstructor
+    public Phone(Long id, String number, Long clientId) {
         this.id = id;
         this.number = number;
+        this.clientId = clientId;
     }
 
-    public Phone(String number) {
+    public Phone(String number, Long clientId) {
         this.number = number;
-    }
-
-    @Override
-    protected Phone clone() {
-        return new Phone(id, number);
+        this.clientId = clientId;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNumber() {
         return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     @Override
@@ -51,6 +38,7 @@ public class Phone implements Cloneable {
         return "Phone{" +
                 "id=" + id +
                 ", number='" + number + '\'' +
+                ", clientId=" + clientId +
                 '}';
     }
 }
