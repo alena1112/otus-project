@@ -16,8 +16,8 @@
                     phone: clientPhoneTextBox.value
                 })
             }).then(function (response) {
-                return response.text().then(function (text) {
-                    clientDataContainer.innerHTML = text;
+                return response.text().then(function () {
+                    clientDataContainer.innerHTML = "Clint saved successfully";
                 })
             });
         }
@@ -40,7 +40,7 @@
 <pre id="clientDataContainer"></pre>
 
 <h4>Все клиенты</h4>
-<table style="width: 400px">
+<table class="clients" style="width: 400px">
     <thead>
     <tr>
         <td style="width: 50px">Id</td>
@@ -50,20 +50,12 @@
     </tr>
     </thead>
     <tbody>
-    <#list allClients as client>
-        <tr>
-            <td>${client.id}</td>
-            <td>${client.name}</td>
-            <td><#if client.address??>${client.address.street}</#if></td>
-            <td>
-                <#if client.phones??>
-                    <#list client.phones as phone>
-                        ${phone.number}<#sep>, </#sep>
-                    </#list>
-                </#if>
-            </td>
-        </tr>
-    </#list>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.id}"/>
+        <td th:text="${client.name}"/>
+        <td th:text="${client.address}"/>
+        <td th:text="${client.phone}"/>
+    </tr>
     </tbody>
 </table>
 </body>
